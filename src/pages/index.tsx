@@ -1,74 +1,132 @@
-import { GetServerSideProps, NextPage } from 'next'
-import { FaDochub, FaBook } from 'react-icons/fa'
-import styles from '~/styles/Home.module.css'
-import HashIcon from '../svgs/hash-icon.svg'
+import { useState } from 'react'
+import { NextPage } from 'next'
+import { FaLock, FaGithub } from 'react-icons/fa'
 import { NextAppPageProps } from '~/types/app'
 import Layout from '~/components/Layout'
+import Spinner from '~/components/Spinner'
+import { useFormFields } from '~/lib/utils'
+import { useAuth } from '~/lib/auth'
 
-type IndexPageServerSideProps = {
-  meta: {
-    title: string
-  }
+type SignUpFieldProps = {
+  email: string
+  password: string
 }
 
-const IndexPage: NextPage<NextAppPageProps> = ({ meta }) => {
+const FORM_VALUES: SignUpFieldProps = {
+  email: '',
+  password: '',
+}
+
+const IndexPage: NextPage<NextAppPageProps> = () => {
+  const [isSignIn, setIsSignIn] = useState(true)
+  const { loading, signIn, signUp, signInWithProvider } = useAuth()
+  // Now since we have our form ready, what we're gonna need for signing up our users
+  // 1. let users provide email and password
+  const [values, handleChange, resetFormFields] =
+    useFormFields<SignUpFieldProps>(FORM_VALUES)
+  // 2. send the provided details to Supabase
+
+  const handleSumbit = async (event: React.FormEvent) => {
+    event.preventDefault()
+    isSignIn ? await signIn(values) : await signUp(values)
+    resetFormFields()
+  }
+
   return (
-    <Layout>
-      <div className={styles.container}>
-        <main className={styles.main}>
-          <h1 className="w-full flex flex-col place-items-center text-6xl gap-2">
-            <HashIcon />
-            <img src="/nsk.png" alt="NSK Logo" className="w-32" /> {meta?.title}
-          </h1>
-
-          <p className={styles.description}>
-            Get started by editing{' '}
-            <code className={styles.code}>src/pages/index.tsx</code>
-          </p>
-
-          <div className={styles.grid}>
-            <a href="https://nextjs.org/docs" className={styles.card}>
-              <FaDochub className="text-4xl mb-2" />
-              <h3>Documentation &rarr;</h3>
-              <p>Find in-depth information about Next.js features and API.</p>
-            </a>
-
-            <a href="https://nextjs.org/learn" className={styles.card}>
-              <FaBook className="text-4xl mb-2" />
-              <h3>Learn &rarr;</h3>
-              <p>Learn about Next.js in an interactive course with quizzes!</p>
-            </a>
-
-            <a
-              href="https://github.com/vercel/next.js/tree/master/examples"
-              className={styles.card}
-            >
-              <h3>Examples &rarr;</h3>
-              <p>Discover and deploy boilerplate example Next.js projects.</p>
-            </a>
-
-            <a
-              href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              className={styles.card}
-            >
-              <h3>Deploy &rarr;</h3>
-              <p>
-                Instantly deploy your Next.js site to a public URL with Vercel.
-              </p>
-            </a>
+    <Layout useBackdrop={true} usePadding={false}>
+      <div className="h-screen flex flex-col justify-center items-center relative">
+        {/* App logo and tagline*/}
+        <div className="w-full text-center mb-4 flex  flex-col place-items-center">
+          <div>
+            <FaLock className="text-gray-600 text-5xl shadow-sm" />
           </div>
-        </main>
+          <h3 className="text-3xl text-gray-600">
+            Supa<strong>Auth</strong>&nbsp;
+          </h3>
+          <small>
+            Please provide your <strong>email</strong> and{' '}
+            <strong>password</strong> and {isSignIn ? 'Log In' : 'Sign Up'}
+          </small>
+        </div>
 
-        <footer className={styles.footer}>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Powered by{' '}
-            <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-          </a>
-        </footer>
+        {/* Sign Up form --> */}
+        <form className="w-full sm:w-1/2 xl:w-1/3" onSubmit={handleSumbit}>
+          <div className="border-teal p-8 border-t-12 bg-white mb-6 rounded-lg shadow-lg">
+            <button
+              onClick={(evt) => {
+                evt.preventDefault()
+                signInWithProvider('github')
+              }}
+              className="flex-1 bg-gray-200 text-green-700 py-3 rounded w-full text-center shadow"
+            >
+              <FaGithub className="inline-block text-2xl" />{' '}
+              {isSignIn ? 'Log In' : 'Sign Up'} with <strong>Github</strong>
+            </button>
+            <hr className="my-4" />
+            <div className="mb-4">
+              <label
+                htmlFor="email"
+                className="block font-semibold text-gray-800 mb-2"
+              >
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                className="h-12 px-4 py-2 bg-white rounded shadow-inner border-gray-300 w-full border  hover:border-gray-400"
+                placeholder="Your Email"
+                required
+                value={values.email}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="password"
+                className="block font-semibold text-gray-800 mb-2"
+              >
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                className="h-12 px-4 py-2 bg-white rounded shadow-inner border-gray-300 w-full border hover:border-gray-400"
+                placeholder="Your password. Leave empty for password-less login"
+                value={values.password}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* <!-- Sign Up & Sign In form: Actions --> */}
+
+            <div className="flex pt-4 gap-2">
+              <button
+                type="submit"
+                className="flex-1 bg-gray-500 border border-gray-600 text-white py-3 rounded w-full text-center shadow"
+              >
+                {isSignIn ? 'Log In' : 'Sign Up'}
+              </button>
+              <div className="flex-1 text-right">
+                <small className="block text-gray-600">
+                  {isSignIn ? 'Not a member yet?' : 'Already a member?'}{' '}
+                </small>
+                <a
+                  className="block font-semibold"
+                  href=""
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setIsSignIn(!isSignIn)
+                  }}
+                >
+                  {isSignIn ? 'Sign Up' : 'Log In'}
+                </a>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div className="h-12 w-12 relative">{loading && <Spinner />}</div>
       </div>
     </Layout>
   )
@@ -76,13 +134,8 @@ const IndexPage: NextPage<NextAppPageProps> = ({ meta }) => {
 
 export default IndexPage
 
-export const getServerSideProps: GetServerSideProps<IndexPageServerSideProps> =
-  async () => {
-    return {
-      props: {
-        meta: {
-          title: 'Next.js Starter Kit',
-        },
-      },
-    }
-  }
+IndexPage.defaultProps = {
+  meta: {
+    title: 'SupaAuth - Sign Up',
+  },
+}

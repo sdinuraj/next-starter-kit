@@ -9,7 +9,7 @@ Boilerplate to quckly get up and running with Next.js with
 
 and pre-made
 - __Message/Alerts__ `coz who don't uses one?
-- __Authentication system with Supabase__ In the [with-supabase](https://github.com/one-aalam/next-starter-kit/tree/auth-supabase) branch
+- __Authentication system with Supabase__
 
 ## Getting Started
 

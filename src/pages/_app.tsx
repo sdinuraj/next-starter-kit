@@ -1,4 +1,5 @@
 import 'tailwindcss/tailwind.css'
+import '@fontsource/work-sans'
 import '~/styles/globals.css'
 
 import React from 'react'
@@ -8,6 +9,7 @@ import { DefaultSeo } from 'next-seo'
 
 import SEO from '../../next-seo.config'
 import { MessageProvider } from '~/lib/message'
+import { AuthProvider } from '~/lib/auth'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const pageMeta = (Component as any)?.defaultProps?.meta || {}
@@ -20,7 +22,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <DefaultSeo {...pageSEO} />
       <MessageProvider>
-        <Component {...pageProps} />
+        <AuthProvider>
+          <Component {...pageProps} />
+        </AuthProvider>
       </MessageProvider>
     </React.Fragment>
   )

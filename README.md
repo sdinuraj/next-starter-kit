@@ -1,4 +1,3 @@
-
 # Next.js Starter Kit
 Boilerplate to quckly get up and running with Next.js with
 - __Typescript__ as the language choice
@@ -11,8 +10,6 @@ Boilerplate to quckly get up and running with Next.js with
 and pre-made
 - __Message/Alerts__ `coz who don't uses one?
 - __Authentication system with Supabase__
-
-
 
 ## Getting Started
 

@@ -34,5 +34,7 @@ module.exports = {
     //     allowConciseArrowFunctionExpressionsStartingWithVoid: true,
     //   },
     // ],
+    // This rule disables the `Image` component's usage check. Enable if you'd prefer to turn it on for the entire app.
+    '@next/next/no-img-element': 'off',
   },
 }

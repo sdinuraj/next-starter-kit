@@ -1,6 +1,12 @@
 import { createContext, FunctionComponent, useState, useEffect } from 'react'
-import Router from 'next/router'
-import { User, Session, AuthChangeEvent, Provider, UserCredentials } from '@supabase/supabase-js'
+import { useRouter } from 'next/router'
+import {
+  User,
+  Session,
+  AuthChangeEvent,
+  Provider,
+  UserCredentials,
+} from '@supabase/supabase-js'
 import { supabase } from '~/lib/supabase'
 import { useMessage } from '~/lib/message'
 import { ROUTE_HOME, ROUTE_AUTH } from '~/config'
@@ -24,6 +30,7 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
   const [userLoading, setUserLoading] = useState(true)
   const [loggedIn, setLoggedin] = useState(false)
   const { handleMessage } = useMessage()
+  const router = useRouter()
 
   const signUp = async (payload: UserCredentials) => {
     try {
@@ -94,7 +101,7 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
       setUser(user)
       setUserLoading(false)
       setLoggedin(true)
-      Router.push(ROUTE_HOME)
+      router.push(ROUTE_HOME)
     } else {
       setUserLoading(false)
     }
@@ -107,10 +114,10 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
         if (user) {
           setUser(user)
           setLoggedin(true)
-          Router.push(ROUTE_HOME)
+          router.push(ROUTE_HOME)
         } else {
           setUser(null)
-          Router.push(ROUTE_AUTH)
+          router.push(ROUTE_AUTH)
         }
       }
     )
@@ -118,7 +125,7 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
     return () => {
       authListener.unsubscribe()
     }
-  }, [])
+  }, [router])
 
   return (
     <AuthContext.Provider

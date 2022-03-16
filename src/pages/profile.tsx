@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { GetServerSideProps } from 'next'
 import Link from 'next/link'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 import { supabase } from '~/lib/supabase'
 import { useAuth, ProtectedRoute } from '~/lib/auth'
 import Layout from '~/components/Layout'
@@ -11,12 +11,13 @@ import { NextAppPageServerSideProps } from '~/types/app'
 
 const ProfilePage = (props) => {
   const { user, userLoading, signOut, loggedIn } = useAuth()
+  const router = useRouter()
 
   useEffect(() => {
     if (!userLoading && !loggedIn) {
-      Router.push(ROUTE_AUTH)
+      router.push(ROUTE_AUTH)
     }
-  }, [userLoading, loggedIn])
+  }, [userLoading, loggedIn, router])
 
   if (userLoading) {
     return <SpinnerFullPage />

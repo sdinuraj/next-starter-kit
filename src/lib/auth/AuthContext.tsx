@@ -98,6 +98,7 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
       const { error } = await supabase.auth.signOut()
       if (error) {
         handleMessage({ message: error.message, type: 'error' })
+      } else {
       }
     } catch (error) {
       handleMessage({
@@ -139,6 +140,7 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
           router.push(ROUTE_HOME)
         } else {
           setUser(null)
+          setLoggedin(false)
           router.push(ROUTE_AUTH)
         }
       }

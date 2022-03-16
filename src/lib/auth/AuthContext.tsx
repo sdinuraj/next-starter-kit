@@ -80,10 +80,32 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
   }
 
   const signInWithProvider = async (provider: Provider) => {
-    await supabase.auth.signIn({ provider })
+    try {
+      const { error } = await supabase.auth.signIn({ provider })
+      if (error) {
+        handleMessage({ message: error.message, type: 'error' })
+      }
+    } catch (error) {
+      handleMessage({
+        message: error.error_description || error,
+        type: 'error',
+      })
+    }
   }
 
-  const signOut = async () => await supabase.auth.signOut()
+  const signOut = async () => {
+    try {
+      const { error } = await supabase.auth.signOut()
+      if (error) {
+        handleMessage({ message: error.message, type: 'error' })
+      }
+    } catch (error) {
+      handleMessage({
+        message: error.error_description || error,
+        type: 'error',
+      })
+    }
+  }
 
   const setServerSession = async (event: AuthChangeEvent, session: Session) => {
     await fetch('/api/auth', {

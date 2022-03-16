@@ -1,6 +1,7 @@
 import type { GetServerSidePropsContext } from 'next'
 import { User } from '@supabase/supabase-js'
 import { supabase } from '~/lib/supabase'
+import { ROUTE_AUTH } from '~/config'
 
 export type ProtectedRouteProps = {
   props: {
@@ -35,7 +36,7 @@ export type ProtectedRouteOption = {
 
 export const ProtectedRoute = async ({
   context: { req },
-  redirectTo = '/',
+  redirectTo = ROUTE_AUTH,
   getPropsFunc = () => {},
 }: ProtectedRouteOption): Promise<ProtectedRouteServerSideProps> => {
   const { user } = await supabase.auth.api.getUserByCookie(req)

@@ -22,7 +22,7 @@ const FullLayout: FunctionComponent<LayoutProps> = ({
         className={classNames(
           'w-full h-screen mx-auto relative',
           usePadding && 'px-2 sm:px-6 lg:px-8',
-          useBackdrop && 'bg-gray-200'
+          useBackdrop && 'bg-base-300'
         )}
       >
         <MessageList messages={messages} />

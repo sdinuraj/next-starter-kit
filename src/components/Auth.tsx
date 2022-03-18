@@ -1,4 +1,5 @@
 import { FunctionComponent, useState } from 'react'
+import classNames from 'classnames'
 import { FaGithub } from 'react-icons/fa'
 import { useFormFields } from '~/lib/utils'
 import { useAuth } from '~/lib/auth'
@@ -76,7 +77,10 @@ const Auth: FunctionComponent = () => {
           <div className="flex pt-4 gap-2">
             <button
               type="submit"
-              className={`btn btn-primary btn-wide ${loading ? 'loading' : ''}`}
+              className={classNames(
+                'btn btn-primary btn-wide',
+                loading && 'loading'
+              )}
             >
               {loading ? '' : isSignIn ? 'Log In' : 'Sign Up'}
             </button>

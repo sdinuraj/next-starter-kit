@@ -25,4 +25,3 @@ export type NextAppPageRedirProps = {
 export type NextAppPageServerSideProps =
   | NextAppPageUserProps
   | NextAppPageRedirProps
-

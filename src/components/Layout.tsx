@@ -24,6 +24,7 @@ const FullLayout: FunctionComponent<LayoutProps> = ({
           usePadding && 'px-2 sm:px-6 lg:px-8',
           useBackdrop && 'bg-base-300'
         )}
+        data-theme="cmyk"
       >
         <MessageList messages={messages} />
         {children}

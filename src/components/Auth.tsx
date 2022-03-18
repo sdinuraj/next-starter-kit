@@ -41,7 +41,7 @@ const Auth: FunctionComponent = () => {
             <FaGithub className="inline-block text-2xl" />
             {isSignIn ? 'Log In' : 'Sign Up'} with Github
           </button>
-          <hr className="my-4" />
+          <div className="divider"></div>
           <div className="mb-4">
             <label htmlFor="email" className="label font-semibold">
               <span className="label-text">Email</span>
@@ -85,11 +85,11 @@ const Auth: FunctionComponent = () => {
               {loading ? '' : isSignIn ? 'Log In' : 'Sign Up'}
             </button>
             <div className="flex-1 text-right">
-              <small className="block">
+              <small className="text-base-content block">
                 {isSignIn ? 'Not a member yet?' : 'Already a member?'}{' '}
               </small>
               <a
-                className="block font-semibold"
+                className="text-base-content block font-semibold"
                 href=""
                 onClick={(e) => {
                   e.preventDefault()

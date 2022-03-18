@@ -18,12 +18,12 @@ const IndexPage: NextPage<NextAppPageProps> = () => {
         {/* App logo and tagline*/}
         <div className="w-full text-center mb-4 flex flex-col place-items-center">
           <div>
-            <FaLock className="text-base-content text-5xl" />
+            <FaLock className="text-5xl" />
           </div>
-          <h3 className="text-base-content text-3xl">
+          <h3 className="text-3xl">
             Supa<strong>Auth</strong>&nbsp;
           </h3>
-          <p className="text-base-content">Please login to continue.</p>
+          <p>Please login to continue.</p>
         </div>
         <Auth />
       </div>

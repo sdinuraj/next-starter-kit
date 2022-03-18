@@ -85,11 +85,11 @@ const Auth: FunctionComponent = () => {
               {loading ? '' : isSignIn ? 'Log In' : 'Sign Up'}
             </button>
             <div className="flex-1 text-right">
-              <small className="text-base-content block">
+              <small className="block">
                 {isSignIn ? 'Not a member yet?' : 'Already a member?'}{' '}
               </small>
               <a
-                className="text-base-content block font-semibold"
+                className="block font-semibold"
                 href=""
                 onClick={(e) => {
                   e.preventDefault()

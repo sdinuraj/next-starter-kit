@@ -20,11 +20,11 @@ const FullLayout: FunctionComponent<LayoutProps> = ({
       <Header />
       <main
         className={classNames(
-          'w-full h-screen mx-auto relative',
+          'w-full h-screen mx-auto relative bg-base-100 text-base-content',
           usePadding && 'px-2 sm:px-6 lg:px-8',
           useBackdrop && 'bg-base-300'
         )}
-        data-theme="cmyk"
+        data-theme="cupcake"
       >
         <MessageList messages={messages} />
         {children}

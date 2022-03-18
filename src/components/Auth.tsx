@@ -83,9 +83,10 @@ const Auth: FunctionComponent = () => {
           <div className="flex pt-4 gap-2">
             <button
               type="submit"
-              className="flex-1 bg-gray-500 border border-gray-600 text-white py-3 rounded w-full text-center shadow"
+              // className="flex-1 bg-gray-500 border border-gray-600 text-white py-3 rounded w-full text-center shadow"
+              className={`btn btn-primary btn-wide ${loading ? 'loading' : ''}`}
             >
-              {isSignIn ? 'Log In' : 'Sign Up'}
+              {loading ? '' : isSignIn ? 'Log In' : 'Sign Up'}
             </button>
             <div className="flex-1 text-right">
               <small className="block text-gray-600">
@@ -105,7 +106,6 @@ const Auth: FunctionComponent = () => {
           </div>
         </div>
       </form>
-      <div className="h-12 w-12 relative">{loading && <Spinner />}</div>
     </div>
   )
 }

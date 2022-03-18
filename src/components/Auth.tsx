@@ -2,7 +2,6 @@ import { FunctionComponent, useState } from 'react'
 import { FaGithub } from 'react-icons/fa'
 import { useFormFields } from '~/lib/utils'
 import { useAuth } from '~/lib/auth'
-import Spinner from '~/components/Spinner'
 
 type SignUpFieldProps = {
   email: string
@@ -30,7 +29,7 @@ const Auth: FunctionComponent = () => {
     <div className="w-full flex flex-col justify-center items-center relative">
       {/* Sign Up form --> */}
       <form className="w-full sm:w-1/2 xl:w-1/3" onSubmit={handleSumbit}>
-        <div className="border-teal p-8 border-t-12 bg-white mb-6 rounded-lg shadow-lg">
+        <div className="form-control bg-base-100 p-8 mb-6 rounded-xl shadow-xl">
           <button
             onClick={(evt) => {
               evt.preventDefault()
@@ -43,36 +42,30 @@ const Auth: FunctionComponent = () => {
           </button>
           <hr className="my-4" />
           <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block font-semibold text-gray-800 mb-2"
-            >
-              Email
+            <label htmlFor="email" className="label font-semibold">
+              <span className="label-text">Email</span>
             </label>
             <input
               id="email"
               name="email"
               type="email"
-              className="h-12 px-4 py-2 bg-white rounded shadow-inner border-gray-300 w-full border  hover:border-gray-400"
-              placeholder="Your Email"
+              className="input input-bordered w-full shadow-inner"
+              placeholder="Enter your email"
               required
               value={values.email}
               onChange={handleChange}
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block font-semibold text-gray-800 mb-2"
-            >
-              Password
+            <label htmlFor="password" className="label font-semibold">
+              <span className="label-text">Password</span>
             </label>
             <input
               id="password"
               name="password"
               type="password"
-              className="h-12 px-4 py-2 bg-white rounded shadow-inner border-gray-300 w-full border hover:border-gray-400"
-              placeholder="Your password. Leave empty for password-less login"
+              className="input input-bordered w-full shadow-inner"
+              placeholder="Enter your password. Leave empty for password-less login"
               value={values.password}
               onChange={handleChange}
             />
@@ -83,13 +76,12 @@ const Auth: FunctionComponent = () => {
           <div className="flex pt-4 gap-2">
             <button
               type="submit"
-              // className="flex-1 bg-gray-500 border border-gray-600 text-white py-3 rounded w-full text-center shadow"
               className={`btn btn-primary btn-wide ${loading ? 'loading' : ''}`}
             >
               {loading ? '' : isSignIn ? 'Log In' : 'Sign Up'}
             </button>
             <div className="flex-1 text-right">
-              <small className="block text-gray-600">
+              <small className="block">
                 {isSignIn ? 'Not a member yet?' : 'Already a member?'}{' '}
               </small>
               <a

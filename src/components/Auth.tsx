@@ -36,10 +36,10 @@ const Auth: FunctionComponent = () => {
               evt.preventDefault()
               signInWithProvider('github')
             }}
-            className="flex-1 bg-gray-200 text-green-700 py-3 rounded w-full text-center shadow"
+            className="btn btn-block gap-2"
           >
-            <FaGithub className="inline-block text-2xl" />{' '}
-            {isSignIn ? 'Log In' : 'Sign Up'} with <strong>Github</strong>
+            <FaGithub className="inline-block text-2xl" />
+            {isSignIn ? 'Log In' : 'Sign Up'} with Github
           </button>
           <hr className="my-4" />
           <div className="mb-4">
